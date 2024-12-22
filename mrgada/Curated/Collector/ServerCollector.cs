@@ -7,9 +7,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using System.Net.Http;
 using System.Net.Sockets;
 using System.Threading;
+using System.Threading.Tasks;
 using Serilog;
 
 public static partial class mrgada
@@ -22,29 +22,33 @@ public static partial class mrgada
 
         private TcpListener tcpl_listener;
 
-        private List<TcpClient> _clients = [];
-        private object _clientsLock = new object();
+        private List<TcpClient> _clients = new List<TcpClient>();
+        private readonly object _clientsLock = new object();
 
-        private Thread t_clientConnect;
+        // -- Replace Thread references with Task & CancellationToken --
+        private Task _taskClientConnect;
+        private Task _taskClientDisconnect;
+        private Task _taskClientListener;
+
+        private CancellationTokenSource _cts;
+
         private bool b_clientConnect;
         private readonly int _clientConnectThreadTimeoutMilliseconds = 100;
 
-        private Thread t_clientListener;
         private bool b_clientListener;
         private readonly int _clientListenerThreadTimeoutMilliseconds = 50;
 
-        Thread t_clientDisconnect;
-        bool b_clientDisconnect;
+        private bool b_clientDisconnect;
         private readonly int _clientDisconnectThreadTimeoutMilliseconds = 500;
 
         public ServerCollector
-            (
-            string name, 
-            int port, 
-            int clientConnectThreadTimeoutMilliseconds = 100, 
+        (
+            string name,
+            int port,
+            int clientConnectThreadTimeoutMilliseconds = 100,
             int clientListenerThreadTimeoutMilliseconds = 50,
             int clientDisconnectThreadTimeoutMilliseconds = 500
-            )
+        )
         {
             _name = name;
             _port = port;
@@ -58,14 +62,17 @@ public static partial class mrgada
 
         public bool Started => _started;
         public bool Stopped => !_started;
+
         protected virtual void OnClientConnected(TcpClient client) { }
-        protected virtual void OnClientDisconnected(TcpClient client) { } 
-        protected virtual void OnRecieved(TcpClient client, byte[] data) { } // on server recieve message from client
+        protected virtual void OnClientDisconnected(TcpClient client) { }
+        protected virtual void OnRecieved(TcpClient client, byte[] data) { } // on server receive message from client
         protected virtual void OnStart() { }
         protected virtual void OnStop() { }
+
         public void Broadcast(byte[] data)  // send message to all clients
         {
             if (_clients.Count <= 0 || Stopped) return;
+
             lock (_clientsLock)
             {
                 foreach (TcpClient client in _clients)
@@ -77,50 +84,56 @@ public static partial class mrgada
                     }
                     catch
                     {
-                        Log.Information($"{_name} ServerCollector: Client disconnected while broadcasting started!");
+                        Log.Information($"{_name} ServerCollector: Client disconnected while broadcasting!");
                     }
                 }
             }
         }
 
+        // ----------------------------------------------------------------
+        // Start: create a TcpListener, spawn tasks for connect/disconnect/listener
+        // ----------------------------------------------------------------
         public void Start()
         {
             tcpl_listener = new TcpListener(IPAddress.Parse(mrgada._serverIp), _port);
             tcpl_listener.Start();
 
+            // We'll use a CancellationTokenSource to coordinate stopping
+            _cts = new CancellationTokenSource();
+
+            // Enable flags so the tasks keep running
             b_clientConnect = true;
-            t_clientConnect = new Thread(ClientConnectThread);
-            t_clientConnect.IsBackground = false;
-            t_clientConnect.Priority = ThreadPriority.AboveNormal;
-            t_clientConnect.Start();
-
             b_clientDisconnect = true;
-            t_clientDisconnect = new Thread(ClientDisconnectThread);
-            t_clientDisconnect.IsBackground = false;
-            t_clientDisconnect.Priority = ThreadPriority.AboveNormal;
-            t_clientDisconnect.Start();
-
             b_clientListener = true;
-            t_clientListener = new Thread(ClientListenerThread);
-            t_clientListener.IsBackground = false;
-            t_clientListener.Priority = ThreadPriority.AboveNormal;
-            t_clientListener.Start();
+
+            // Run tasks asynchronously
+            _taskClientConnect = Task.Run(() => ClientConnectLoop(_cts.Token));
+            _taskClientDisconnect = Task.Run(() => ClientDisconnectLoop(_cts.Token));
+            _taskClientListener = Task.Run(() => ClientListenerLoop(_cts.Token));
 
             _started = true;
             OnStart();
 
             Log.Information($"{_name} ServerCollector: started!");
         }
+
+        // ----------------------------------------------------------------
+        // Stop: turn off booleans, cancel tasks, wait for them to finish
+        // ----------------------------------------------------------------
         public void Stop()
         {
+            // Signal loops to exit
             b_clientConnect = false;
             b_clientDisconnect = false;
             b_clientListener = false;
 
-            t_clientConnect.Join();
-            t_clientDisconnect.Join();
-            t_clientListener.Join();
+            // Cancel the token to wake up any Task.Delay
+            _cts.Cancel();
 
+            // Wait for tasks to complete
+            Task.WaitAll(_taskClientConnect, _taskClientDisconnect, _taskClientListener);
+
+            // Stop TcpListener
             tcpl_listener.Stop();
 
             _started = false;
@@ -129,17 +142,18 @@ public static partial class mrgada
             Log.Information($"{_name} ServerCollector: stopped!");
         }
 
-        private void ClientConnectThread()
+        // ------------------------------------------------
+        // Connect loop (replaces ClientConnectThread)
+        // ------------------------------------------------
+        private async Task ClientConnectLoop(CancellationToken token)
         {
-            while (b_clientConnect)
+            while (b_clientConnect && !token.IsCancellationRequested)
             {
                 try
                 {
-                    TcpClient? client = null;
-
                     if (tcpl_listener.Pending())
                     {
-                        client = tcpl_listener.AcceptTcpClient();
+                        TcpClient? client = tcpl_listener.AcceptTcpClient(); // synchronous accept
 
                         if (client != null)
                         {
@@ -149,7 +163,10 @@ public static partial class mrgada
                                 lock (_clientsLock)
                                 {
                                     _clients.Add(client);
-                                    Log.Information($"{_name} ServerCollector, client connected: '{_clientNodes.FirstOrDefault(n => n.Ip == clientIp).Name}', number of connected clients: '{_clients.Count}'");
+                                    Log.Information(
+                                        $"{_name} ServerCollector, client connected: '{_clientNodes.FirstOrDefault(n => n.Ip == clientIp)?.Name}', " +
+                                        $"number of connected clients: '{_clients.Count}'"
+                                    );
                                 }
                                 OnClientConnected(client);
                             }
@@ -159,30 +176,38 @@ public static partial class mrgada
                             }
                         }
                     }
-
-                    Thread.Sleep(_clientConnectThreadTimeoutMilliseconds);
-
                 }
-
                 catch (SocketException e)
                 {
-                    // This exception is expected when the server stops, so we just break the loop.
-                    Log.Information($"{_name} ServerCollector: exception in ClientConnectThread: {e}");
-                    //break; // ???
+                    // Expected when shutting down
+                    Log.Information($"{_name} ServerCollector: exception in ClientConnectLoop: {e}");
                 }
+                catch (Exception ex)
+                {
+                    Log.Error(ex, $"{_name} ServerCollector: exception in ClientConnectLoop");
+                }
+
+                // Instead of Thread.Sleep
+                try
+                {
+                    await Task.Delay(_clientConnectThreadTimeoutMilliseconds, token);
+                }
+                catch (TaskCanceledException) { /* ignore */ }
             }
         }
 
-        private void ClientDisconnectThread()
+        // ------------------------------------------------
+        // Disconnect loop (replaces ClientDisconnectThread)
+        // ------------------------------------------------
+        private async Task ClientDisconnectLoop(CancellationToken token)
         {
-            while (b_clientDisconnect)
+            while (b_clientDisconnect && !token.IsCancellationRequested)
             {
                 try
                 {
-
                     lock (_clientsLock)
                     {
-                        if (_clients.Count != 0)
+                        if (_clients.Count > 0)
                         {
                             for (int i = _clients.Count - 1; i >= 0; i--)
                             {
@@ -191,7 +216,10 @@ public static partial class mrgada
                                 if (!IsClientConnected(client))
                                 {
                                     string clientIp = ((IPEndPoint)client.Client.RemoteEndPoint).Address.ToString();
-                                    Log.Information($"{_name} ServerCollector, client disconnected: '{_clientNodes.FirstOrDefault(n => n.Ip == clientIp).Name}', number of connected clients: '{_clients.Count}'");
+                                    Log.Information(
+                                        $"{_name} ServerCollector, client disconnected: '{_clientNodes.FirstOrDefault(n => n.Ip == clientIp)?.Name}', " +
+                                        $"number of connected clients: '{_clients.Count}'"
+                                    );
                                     _clients.RemoveAt(i);
                                     client.Close();
                                     OnClientDisconnected(client);
@@ -199,30 +227,26 @@ public static partial class mrgada
                             }
                         }
                     }
-                    Thread.Sleep(_clientDisconnectThreadTimeoutMilliseconds);
-
                 }
-                catch { }
-            }
-        }
-        private bool IsClientConnected(TcpClient client)
-        {
-            try
-            {
-                // Check if the client is connected by checking the state of the socket
-                return !(client.Client.Poll(1, SelectMode.SelectRead) && client.Client.Available == 0);
-            }
-            catch (SocketException e)
-            {
-                // If there's a socket exception, the client is definitely not connected
-                Log.Information($"{_name} ServerCollector: exception in IsClientConnected: {e}");
-                return false;
+                catch (Exception ex)
+                {
+                    Log.Error(ex, $"{_name} ServerCollector: exception in ClientDisconnectLoop");
+                }
+
+                try
+                {
+                    await Task.Delay(_clientDisconnectThreadTimeoutMilliseconds, token);
+                }
+                catch (TaskCanceledException) { /* ignore */ }
             }
         }
 
-        private void ClientListenerThread()
+        // ------------------------------------------------
+        // Listener loop (replaces ClientListenerThread)
+        // ------------------------------------------------
+        private async Task ClientListenerLoop(CancellationToken token)
         {
-            while (b_clientListener)
+            while (b_clientListener && !token.IsCancellationRequested)
             {
                 try
                 {
@@ -232,24 +256,51 @@ public static partial class mrgada
                         {
                             try
                             {
-                                if (client.Available > 0) // Check if data is available
+                                if (client.Available > 0)  // Check if data is available
                                 {
                                     NetworkStream ns_stream = client.GetStream();
                                     byte[] data = new byte[client.Available];
                                     int bytesRead = ns_stream.Read(data, 0, data.Length);
 
-                                    if (bytesRead > 0) OnRecieved(client, data);
+                                    if (bytesRead > 0)
+                                    {
+                                        OnRecieved(client, data);
+                                    }
                                 }
                             }
                             catch (Exception ex)
                             {
-                                Log.Information($"{_name} ServerCollector: exception in ClientListenerThread: {ex}");
+                                Log.Information($"{_name} ServerCollector: exception in ClientListenerLoop (inner): {ex}");
                             }
                         }
                     }
-                    Thread.Sleep(_clientListenerThreadTimeoutMilliseconds);
                 }
-                catch { }
+                catch (Exception ex)
+                {
+                    Log.Error(ex, $"{_name} ServerCollector: exception in ClientListenerLoop (outer)");
+                }
+
+                try
+                {
+                    await Task.Delay(_clientListenerThreadTimeoutMilliseconds, token);
+                }
+                catch (TaskCanceledException) { /* ignore */ }
+            }
+        }
+
+        // -----------------------------------------------
+        // Check if a client is connected
+        // -----------------------------------------------
+        private bool IsClientConnected(TcpClient client)
+        {
+            try
+            {
+                return !(client.Client.Poll(1, SelectMode.SelectRead) && client.Client.Available == 0);
+            }
+            catch (SocketException e)
+            {
+                Log.Information($"{_name} ServerCollector: exception in IsClientConnected: {e}");
+                return false;
             }
         }
     }
