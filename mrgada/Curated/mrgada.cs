@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Net.Sockets;
 using System.Net;
 using System.Linq;
+using System;
 
 public static partial class mrgada
 {
@@ -64,12 +65,33 @@ public static partial class mrgada
     public static void AddClientCollector(ClientCollector clientCollector) { _clientCollectors.Add(clientCollector); }
     public static void Start()
     {
-        try {
-        _clientNodeName = _clientNodes.FirstOrDefault(n => (n.Ip == (Dns.GetHostAddresses(Dns.GetHostName()).FirstOrDefault(ip => ip.AddressFamily == AddressFamily.InterNetwork)).ToString())).Name;
-        }
-        catch
+        try
         {
-            _clientNodeName = "ubuntu";
+
+            //var localAddresses = Dns.GetHostAddresses(Dns.GetHostName())
+            //                .Where(ip => ip.AddressFamily == AddressFamily.InterNetwork)
+            //                .Select(ip => ip.ToString())
+            //                .ToList();
+
+            //// Match the IP(s) against your _clientNodes
+            //var matchedNode = _clientNodes.FirstOrDefault(node => localAddresses.Contains(node.Ip));
+            //string IP = Dns.GetHostByName(hostName).AddressList[0].ToString();
+
+            foreach (var ip in Dns.GetHostAddresses(Dns.GetHostName()))
+            {
+                Log.Information(ip.ToString());
+                foreach (var node in _clientNodes)
+                {
+                    if (ip.ToString() == node.Ip)
+                    {
+                        _clientNodeName = node.Name;
+                    }
+                }
+            }
+        }
+        catch 
+        {
+            _clientNodeName = "ip not found";
         }
 
         Log.Information("mrgada: Started!");
