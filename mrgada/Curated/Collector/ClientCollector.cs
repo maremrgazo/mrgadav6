@@ -9,7 +9,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading;
-using System.Xml.Linq;
+using System.Threading.Tasks;
 using Serilog;
 
 public static partial class mrgada
@@ -24,12 +24,16 @@ public static partial class mrgada
         private volatile TcpClient _tcpClient;
         private volatile NetworkStream _networkStream;
 
-        private Thread t_receiveHandler;
-        private bool b_receiveHandler;
-        private readonly int _receiveThreadTimeoutMilliseconds;
+        // REPLACE threads with Tasks
+        private Task? _taskConnectHandler;
+        private Task? _taskReceiveHandler;
 
-        private Thread t_connectHandler;
+        private CancellationTokenSource? _cts;
+
+        private bool b_receiveHandler;
         private bool b_connectHandler;
+
+        private readonly int _receiveThreadTimeoutMilliseconds;
         protected readonly int _connectHandlerTimeoutMilliseconds;
 
         public bool Started => _started;
@@ -38,23 +42,26 @@ public static partial class mrgada
         public bool Connected => _connected;
         public bool Disconnected => !_connected;
 
-        public ClientCollector(string name, int serverPort, int connectHandlerTimeoutMilliseconds = 3000, int receiveThreadTimeoutMilliseconds = 100)
+        // If you're using _clientNodeName in logging, ensure it's defined somewhere:
+        private readonly string _clientNodeName = "ClientNodeName"; // or pull from config
+
+        public ClientCollector(string name, int serverPort, int connectHandlerTimeoutMilliseconds = 3000, int receiveThreadTimeoutMilliseconds = 50)
         {
             _name = name;
             _port = serverPort;
-
             _connectHandlerTimeoutMilliseconds = connectHandlerTimeoutMilliseconds;
             _receiveThreadTimeoutMilliseconds = receiveThreadTimeoutMilliseconds;
 
             mrgada.AddClientCollector(this);
         }
+
         protected virtual void OnConnect() { }
         protected virtual void OnDisconnect() { }
-        protected virtual void OnRecieved(byte[] data) { } // when client recieves server message
+        protected virtual void OnRecieved(byte[] data) { }
         protected virtual void OnStart() { }
         protected virtual void OnStop() { }
 
-        public void Send(byte[] data) // send message to server
+        public void Send(byte[] data)
         {
             if (Disconnected || Stopped) return;
             try
@@ -67,107 +74,159 @@ public static partial class mrgada
             }
         }
 
+        // ---------------------------------------------------------------
+        // Start: create tasks for connect loop & receive loop
+        // ---------------------------------------------------------------
         public void Start()
         {
-            b_connectHandler = true;
-            t_connectHandler = new Thread(ConnectThread);
-            t_connectHandler.IsBackground = true;
-            t_connectHandler.Start();
+            // Create a CancellationTokenSource
+            _cts = new CancellationTokenSource();
 
+            // Signal the loops to keep running
+            b_connectHandler = true;
             b_receiveHandler = true;
-            t_receiveHandler = new Thread(ReceiveThread);
-            t_receiveHandler.IsBackground = true;
-            t_receiveHandler.Start();
+
+            // Fire up tasks
+            _taskConnectHandler = Task.Run(() => ConnectLoop(_cts.Token));
+            _taskReceiveHandler = Task.Run(() => ReceiveLoop(_cts.Token));
 
             OnStart();
-
             Log.Information($"{_name} ClientCollector {_clientNodeName}: started!");
             _started = true;
         }
+
+        // ---------------------------------------------------------------
+        // Stop: cancel tasks, wait for them, close streams
+        // ---------------------------------------------------------------
         public void Stop()
         {
-            b_receiveHandler = false;
+            // Signal loops to stop
             b_connectHandler = false;
+            b_receiveHandler = false;
 
-            t_connectHandler.Join();
-            t_receiveHandler.Join();
+            // Cancel the token (this helps any Task.Delay to wake immediately)
+            if (_cts != null && !_cts.IsCancellationRequested)
+            {
+                _cts.Cancel();
+            }
 
+            // Wait for tasks to complete
+            if (_taskConnectHandler != null && _taskReceiveHandler != null)
+            {
+                try
+                {
+                    Task.WaitAll(_taskConnectHandler, _taskReceiveHandler);
+                }
+                catch (AggregateException ex)
+                {
+                    foreach (var inner in ex.InnerExceptions)
+                    {
+                        if (inner is TaskCanceledException)
+                            continue; // normal on shutdown
+                        Log.Warning($"{_name} ClientCollector: Task exception in Stop(): {inner.Message}");
+                    }
+                }
+            }
+
+            // Close network resources
             _networkStream?.Close();
             _tcpClient?.Close();
 
             OnStop();
-
             Log.Information($"{_name} ClientCollector: stopped!");
             _started = false;
         }
-        private void ConnectThread()
+
+        // ---------------------------------------------------------------
+        // Asynchronous connect loop (replaces ConnectThread)
+        // ---------------------------------------------------------------
+        private async Task ConnectLoop(CancellationToken token)
         {
-            while (b_connectHandler)
+            while (b_connectHandler && !token.IsCancellationRequested)
             {
                 try
                 {
                     if (!_connected)
                     {
+                        // Attempt connection
                         _tcpClient = new TcpClient();
                         _tcpClient.Connect(IPAddress.Parse(mrgada._serverIp), _port);
-                        _networkStream = _tcpClient.GetStream();
 
-                        OnConnect();
+                        _networkStream = _tcpClient.GetStream();
                         _connected = true;
 
-                        while (_connected && b_connectHandler)
+                        OnConnect();
+
+                        // Keep-alive check loop until disconnected
+                        while (_connected && b_connectHandler && !token.IsCancellationRequested)
                         {
                             try
                             {
                                 _networkStream.Write(new byte[0], 0, 0);
-                                Thread.Sleep(_connectHandlerTimeoutMilliseconds);
+                                // Instead of Thread.Sleep, we use async delay
+                                await Task.Delay(_connectHandlerTimeoutMilliseconds, token);
                             }
                             catch
                             {
                                 OnDisconnect();
                                 _connected = false;
+                                break;
                             }
                         }
                     }
                 }
                 catch
                 {
-                    Log.Information($"{_name} ClientCollector: retrying connection in ~ {_connectHandlerTimeoutMilliseconds / 1000.0:F2} seconds");
+                    Log.Information($"{_name} ClientCollector: retry connection in ~{_connectHandlerTimeoutMilliseconds / 1000.0:F2}s");
                     _connected = false;
 
-                    Thread.Sleep(_connectHandlerTimeoutMilliseconds);
+                    // Wait before next connect attempt
+                    try
+                    {
+                        await Task.Delay(_connectHandlerTimeoutMilliseconds, token);
+                    }
+                    catch (TaskCanceledException)
+                    {
+                        // normal on shutdown
+                    }
                 }
             }
         }
 
-        private void ReceiveThread()
+        // ---------------------------------------------------------------
+        // Asynchronous receive loop (replaces ReceiveThread)
+        // ---------------------------------------------------------------
+        private async Task ReceiveLoop(CancellationToken token)
         {
-            try
+            while (b_receiveHandler && !token.IsCancellationRequested)
             {
-                while (b_receiveHandler)
+                try
                 {
-                    if (_connected)
+                    if (_connected && _tcpClient.Available > 0)
                     {
-                        if (_tcpClient.Available > 0)
+                        byte[] buffer = new byte[_tcpClient.Available];
+                        int bytesRead = _networkStream.Read(buffer, 0, buffer.Length);
+                        if (bytesRead > 0)
                         {
-                            byte[] buffer = new byte[_tcpClient.Available];
-                            int bytesRead = _networkStream.Read(buffer, 0, buffer.Length);
-                            if (bytesRead > 0)
-                            {
-                                OnRecieved(buffer);
-                            }
+                            OnRecieved(buffer);
                         }
                     }
-                    Thread.Sleep(_receiveThreadTimeoutMilliseconds);
+                }
+                catch (Exception ex)
+                {
+                    Log.Warning($"{_name} ClientCollector: exception in ReceiveLoop: {ex.Message}");
+                }
+
+                // Instead of Thread.Sleep(...)
+                try
+                {
+                    await Task.Delay(_receiveThreadTimeoutMilliseconds, token);
+                }
+                catch (TaskCanceledException)
+                {
+                    // normal on shutdown
                 }
             }
-            catch (Exception ex)
-            {
-                Log.Warning($"Receive thread encountered an error: {ex.Message}");
-                //_connected = false;
-            }
         }
-
-
     }
 }

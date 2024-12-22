@@ -19,22 +19,29 @@ using static mrgada;
 
 public static partial class mrgada
 {
-    public class S7ClientCollector:ClientCollector
+    public class S7ClientCollector : ClientCollector
     {
-        private List<mrgada.S7Db> _s7PlcDbs;
+        private readonly List<mrgada.S7Db> _s7PlcDbs;
 
-        private List<byte> _send = [];
-        private Thread? t_send;
+        private List<byte> _send = new List<byte>();
+        private readonly object o_sendLock = new();
+
+        // REPLACE Thread with Task
+        private Task? _taskSend;
+        private CancellationTokenSource? _ctsSend;
+
         private bool b_send;
-        private object o_sendLock = new();
-        private int i_sendTimeout = 200;
+        private int i_sendTimeout = 50;
+
         private bool _plcConnected = false;
         public bool PlcConnected => _plcConnected;
 
-        public S7ClientCollector(string name, int port, List<mrgada.S7Db> s7PlcDbs) :base(name, port)
+        public S7ClientCollector(string name, int port, List<mrgada.S7Db> s7PlcDbs)
+            : base(name, port)
         {
             _s7PlcDbs = s7PlcDbs;
         }
+
         public void AddToSendQueue(byte[] data)
         {
             lock (o_sendLock)
@@ -43,62 +50,129 @@ public static partial class mrgada
             }
         }
 
+        // ---------------------------------------------------
+        // OnStart: spin up the sending task
+        // ---------------------------------------------------
         protected override void OnStart()
         {
+            base.OnStart(); // Call base logic first (which starts connect/receive tasks)
+
+            // Start your custom send loop
             b_send = true;
-            t_send = new(SendThread);
-            t_send.IsBackground = true;
-            t_send.Start();
+            _ctsSend = new CancellationTokenSource();
+
+            // Fire up the send loop as an async Task
+            _taskSend = Task.Run(() => SendLoop(_ctsSend.Token));
         }
+
+        // ---------------------------------------------------
+        // OnStop: cancel the sending task & wait for it
+        // ---------------------------------------------------
         protected override void OnStop()
         {
             b_send = false;
-            t_send.Join();
-        }
 
-        private void SendThread()
-        {
-            while (b_send)
+            // Cancel the token to break out of Task.Delay etc.
+            if (_ctsSend != null && !_ctsSend.IsCancellationRequested)
+            {
+                _ctsSend.Cancel();
+            }
+
+            // Wait for the task to complete
+            if (_taskSend != null)
             {
                 try
                 {
+                    _taskSend.Wait();
+                }
+                catch (AggregateException ex)
+                {
+                    // If the task was canceled, it's normal on shutdown
+                    foreach (var inner in ex.InnerExceptions)
+                    {
+                        if (inner is TaskCanceledException)
+                            continue; // ignore
+                        Log.Error(inner, $"{_name} S7ClientCollector: Task exception in OnStop.");
+                    }
+                }
+            }
 
+            base.OnStop(); // Call base logic last (closes streams, etc.)
+        }
+
+        // ---------------------------------------------------
+        // SendLoop replaces the old SendThread
+        // ---------------------------------------------------
+        private async Task SendLoop(CancellationToken token)
+        {
+            while (b_send && !token.IsCancellationRequested)
+            {
+                try
+                {
                     if (_connected)
                     {
                         lock (o_sendLock)
                         {
                             if (_send.Count > 0)
                             {
-                                List<byte> _finallSend = [];
+                                List<byte> _finalSend = new List<byte>();
+
+                                // Insert the total size at the front
                                 Int32 chunkLength = sizeof(Int32) + _send.Count;
-                                _send.InsertRange(0, BitConverter.GetBytes((Int32)chunkLength));
-                                _finallSend.AddRange(_send);
+                                _send.InsertRange(0, BitConverter.GetBytes(chunkLength));
+
+                                _finalSend.AddRange(_send);
                                 _send.Clear();
-                                Send(_finallSend.ToArray());
+
+                                Send(_finalSend.ToArray());
                             }
                         }
-                        Thread.Sleep(i_sendTimeout);
+                        // Instead of Thread.Sleep, use await Task.Delay
+                        try
+                        {
+                            await Task.Delay(i_sendTimeout, token);
+                        }
+                        catch (TaskCanceledException)
+                        {
+                            // normal on shutdown
+                        }
                     }
                     else
                     {
-                        Thread.Sleep(_connectHandlerTimeoutMilliseconds);
+                        // If not connected, wait for next retry
+                        try
+                        {
+                            await Task.Delay(_connectHandlerTimeoutMilliseconds, token);
+                        }
+                        catch (TaskCanceledException)
+                        {
+                            // normal on shutdown
+                        }
                     }
                 }
-                catch { }
+                catch (Exception ex)
+                {
+                    Log.Error(ex, $"{_name} S7ClientCollector: exception in SendLoop");
+                }
             }
         }
+
+        // ---------------------------------------------------
+        // Example: override OnRecieved to process data
+        // ---------------------------------------------------
         protected override void OnRecieved(byte[] data)
         {
             Int32 broadcastLength = BitConverter.ToInt32(data, 0);
             bool isPartial = data.Length != broadcastLength;
 
-            Log.Information($"{mrgada.ClientNodeName}: Client Recieved Broadcast, len ({data.Length}) from S7 ServerCollector: {_name}");
+            Log.Information($"{mrgada.ClientNodeName}: Client received Broadcast, len ({data.Length}) from S7 ServerCollector: {_name}");
 
-            int i = sizeof(Int32); // skip plcConnected
+            int i = sizeof(Int32);
             while (i < data.Length)
             {
                 short i16_chunkLength = BitConverter.ToInt16(data, i);
                 short i16_dbNumber = BitConverter.ToInt16(data, i + sizeof(Int16));
+
                 byte[] ba_dbBytes = new byte[i16_chunkLength - (sizeof(Int16) + sizeof(Int16))];
                 Buffer.BlockCopy(data, i + sizeof(Int16) + sizeof(Int16), ba_dbBytes, 0, ba_dbBytes.Length);
 
@@ -108,14 +182,15 @@ public static partial class mrgada
                     {
                         s7Db.SetBytes(ba_dbBytes);
                         s7Db.ParseCVs();
+
                         Log.Information($"  Client chunk, db ({i16_dbNumber}), len ({ba_dbBytes.Length}) from S7 Collector: {_name}");
 
                         // Get last 10 bytes of db and log
                         int lengthToTake = Math.Min(10, ba_dbBytes.Length);
                         byte[] lastBytes = new byte[lengthToTake];
                         Array.Copy(ba_dbBytes, ba_dbBytes.Length - lengthToTake, lastBytes, 0, lengthToTake);
-                        string s_lastBytes = BitConverter.ToString(lastBytes).Replace("-", " "); ;
-                        Log.Information($"      Last ~ 10 bytes are, {s_lastBytes} ");
+                        string s_lastBytes = BitConverter.ToString(lastBytes).Replace("-", " ");
+                        Log.Information($"      Last ~ 10 bytes are: {s_lastBytes}");
 
                         break;
                     }
