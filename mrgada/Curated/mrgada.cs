@@ -64,7 +64,13 @@ public static partial class mrgada
     public static void AddClientCollector(ClientCollector clientCollector) { _clientCollectors.Add(clientCollector); }
     public static void Start()
     {
+        try {
         _clientNodeName = _clientNodes.FirstOrDefault(n => (n.Ip == (Dns.GetHostAddresses(Dns.GetHostName()).FirstOrDefault(ip => ip.AddressFamily == AddressFamily.InterNetwork)).ToString())).Name;
+        }
+        catch
+        {
+            _clientNodeName = "ubuntu";
+        }
 
         Log.Information("mrgada: Started!");
         switch (mrgada._nodeType)
