@@ -45,7 +45,7 @@ public static partial class mrgada
         // If you're using _clientNodeName in logging, ensure it's defined somewhere:
         private readonly string _clientNodeName = "ClientNodeName"; // or pull from config
 
-        public ClientCollector(string name, int serverPort, int connectHandlerTimeoutMilliseconds = 3000, int receiveThreadTimeoutMilliseconds = 50)
+        public ClientCollector(string name, int serverPort, int connectHandlerTimeoutMilliseconds = 3000, int receiveThreadTimeoutMilliseconds = 25)
         {
             _name = name;
             _port = serverPort;
