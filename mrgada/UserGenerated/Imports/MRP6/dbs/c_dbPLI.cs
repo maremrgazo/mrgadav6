@@ -4,67 +4,67 @@ using static mrgada.S7Collector;
 
 public static partial class mrgada
 {
-    public partial class MRP6
+    public partial class _MRP6
     {
         public class c_dbPLI: mrgada.S7Db
         {
             #region public vars
             
-                public List<S7Var<Int>> PLI_EX = [];
-                public List<S7Var<Int>> PLI_ST = [];
-                public List<S7Var<Int>> PLI_SI = [];
-                public List<S7Var<Int>> PLI_OP = [];
-                public List<S7Var<Word>> PLI_WR = [];
-                public List<S7Var<Int>> PLI_OC = [];
-                public List<S7Var<Int>> PLI_CD = [];
-                public List<S7Var<Int>> PLI_IS = [];
-                public List<S7Var<Int>> PLI_UN = [];
-                public List<S7Var<Int>> PLI_F = [];
-                public List<S7Var<Int>> PLI_RQ = [];
-                public List<S7Var<Int>> PLI_SB = [];
-                public List<S7Var<Int>> PLI_BRQ = [];
-                public List<S7Var<Int>> PLI_HI = [];
-                public List<S7Var<Int>> PLI_MS = [];
-                public List<S7Var<Int>> PLI_MD = [];
-                public List<S7Var<Bool>> PLI_RC = [];
-                public List<S7Var<Bool>> PLI_TC = [];
-                public List<S7Var<Bool>> PLI_AC = [];
-                public List<S7Var<Bool>> PLI_HC = [];
-                public List<S7Var<Bool>> PLI_SC = [];
-                public List<S7Var<Bool>> PLI_EC = [];
-                public List<S7Var<Bool>> PLI_R = [];
-                public List<S7Var<Bool>> PLI_T = [];
-                public List<S7Var<Bool>> PLI_A = [];
-                public List<S7Var<Bool>> PLI_H = [];
-                public List<S7Var<Bool>> PLI_S = [];
-                public List<S7Var<Bool>> PLI_E = [];
-                public List<S7Var<Bool>> PLI_I = [];
-                public List<S7Var<Bool>> PLI_C = [];
-                public List<S7Var<Bool>> PLI_AD = [];
-                public List<S7Var<Bool>> PLI_HD = [];
-                public List<S7Var<Bool>> PLI_SD = [];
-                public List<S7Var<Bool>> PLI_FI = [];
-                public List<S7Var<Bool>> PLI_W = [];
-                public List<S7Var<Bool>> PLI_P = [];
-                public List<S7Var<Bool>> PLI_PD = [];
-                public List<S7Var<Bool>> PLI_SS = [];
-                public List<S7Var<Bool>> PLI_NC = [];
-                public List<S7Var<Bool>> PLI_IN = [];
-                public List<S7Var<Bool>> PLI_ER = [];
-                public List<S7Var<Bool>> PLI_OR = [];
-                public List<S7Var<Bool>> PLI_RR = [];
-                public List<S7Var<Bool>> PLI_CR = [];
-                public List<S7Var<Bool>> PLI_RE = [];
-                public List<S7Var<Bool>> PLI_DL = [];
-                public List<S7Var<Bool>> PLI_WC = [];
-                public List<S7Var<Bool>> PLI_II = [];
-                public List<S7Var<Bool>> PLI_HA = [];
+                public List<S7Var<int>> PLI_EX = [];
+                public List<S7Var<int>> PLI_ST = [];
+                public List<S7Var<int>> PLI_SI = [];
+                public List<S7Var<int>> PLI_OP = [];
+                public List<S7Var<ushort>> PLI_WR = [];
+                public List<S7Var<int>> PLI_OC = [];
+                public List<S7Var<int>> PLI_CD = [];
+                public List<S7Var<int>> PLI_IS = [];
+                public List<S7Var<int>> PLI_UN = [];
+                public List<S7Var<int>> PLI_F = [];
+                public List<S7Var<int>> PLI_RQ = [];
+                public List<S7Var<int>> PLI_SB = [];
+                public List<S7Var<int>> PLI_BRQ = [];
+                public List<S7Var<int>> PLI_HI = [];
+                public List<S7Var<int>> PLI_MS = [];
+                public List<S7Var<int>> PLI_MD = [];
+                public List<S7Var<bool>> PLI_RC = [];
+                public List<S7Var<bool>> PLI_TC = [];
+                public List<S7Var<bool>> PLI_AC = [];
+                public List<S7Var<bool>> PLI_HC = [];
+                public List<S7Var<bool>> PLI_SC = [];
+                public List<S7Var<bool>> PLI_EC = [];
+                public List<S7Var<bool>> PLI_R = [];
+                public List<S7Var<bool>> PLI_T = [];
+                public List<S7Var<bool>> PLI_A = [];
+                public List<S7Var<bool>> PLI_H = [];
+                public List<S7Var<bool>> PLI_S = [];
+                public List<S7Var<bool>> PLI_E = [];
+                public List<S7Var<bool>> PLI_I = [];
+                public List<S7Var<bool>> PLI_C = [];
+                public List<S7Var<bool>> PLI_AD = [];
+                public List<S7Var<bool>> PLI_HD = [];
+                public List<S7Var<bool>> PLI_SD = [];
+                public List<S7Var<bool>> PLI_FI = [];
+                public List<S7Var<bool>> PLI_W = [];
+                public List<S7Var<bool>> PLI_P = [];
+                public List<S7Var<bool>> PLI_PD = [];
+                public List<S7Var<bool>> PLI_SS = [];
+                public List<S7Var<bool>> PLI_NC = [];
+                public List<S7Var<bool>> PLI_IN = [];
+                public List<S7Var<bool>> PLI_ER = [];
+                public List<S7Var<bool>> PLI_OR = [];
+                public List<S7Var<bool>> PLI_RR = [];
+                public List<S7Var<bool>> PLI_CR = [];
+                public List<S7Var<bool>> PLI_RE = [];
+                public List<S7Var<bool>> PLI_DL = [];
+                public List<S7Var<bool>> PLI_WC = [];
+                public List<S7Var<bool>> PLI_II = [];
+                public List<S7Var<bool>> PLI_HA = [];
 
         #endregion
 
                 private mrgada.S7ClientCollector _s7CollectorClient;
                 private S7.Net.Plc _s7Plc;
-                public c_dbAnalogSensorsSCADA(int num, int len, mrgada.S7ClientCollector s7CollectorClient, S7.Net.Plc s7Plc) : base(num, len)
+                public c_dbPLI(int num, int len, mrgada.S7ClientCollector s7CollectorClient, S7.Net.Plc s7Plc) : base(num, len)
                 {
                     _s7CollectorClient = s7CollectorClient;
                     _s7Plc = s7Plc;
@@ -477,201 +477,202 @@ public static partial class mrgada
 
             public override void ParseCVs()
             {
+                int i = 0;
                 
                     for (i = 1; i <= 150; i++) {
-                        PLI_EX[i].ParseCVs(Bytes);
+                        PLI_EX[i].ParseCVs();
                     }
         
                     for (i = 1; i <= 150; i++) {
-                        PLI_ST[i].ParseCVs(Bytes);
+                        PLI_ST[i].ParseCVs();
                     }
         
                     for (i = 1; i <= 150; i++) {
-                        PLI_SI[i].ParseCVs(Bytes);
+                        PLI_SI[i].ParseCVs();
                     }
         
                     for (i = 1; i <= 150; i++) {
-                        PLI_OP[i].ParseCVs(Bytes);
+                        PLI_OP[i].ParseCVs();
                     }
         
                     for (i = 1; i <= 150; i++) {
-                        PLI_WR[i].ParseCVs(Bytes);
+                        PLI_WR[i].ParseCVs();
                     }
         
                     for (i = 1; i <= 150; i++) {
-                        PLI_OC[i].ParseCVs(Bytes);
+                        PLI_OC[i].ParseCVs();
                     }
         
                     for (i = 1; i <= 150; i++) {
-                        PLI_CD[i].ParseCVs(Bytes);
+                        PLI_CD[i].ParseCVs();
                     }
         
                     for (i = 1; i <= 150; i++) {
-                        PLI_IS[i].ParseCVs(Bytes);
+                        PLI_IS[i].ParseCVs();
                     }
         
                     for (i = 1; i <= 150; i++) {
-                        PLI_UN[i].ParseCVs(Bytes);
+                        PLI_UN[i].ParseCVs();
                     }
         
                     for (i = 1; i <= 150; i++) {
-                        PLI_F[i].ParseCVs(Bytes);
+                        PLI_F[i].ParseCVs();
                     }
         
                     for (i = 1; i <= 150; i++) {
-                        PLI_RQ[i].ParseCVs(Bytes);
+                        PLI_RQ[i].ParseCVs();
                     }
         
                     for (i = 1; i <= 150; i++) {
-                        PLI_SB[i].ParseCVs(Bytes);
+                        PLI_SB[i].ParseCVs();
                     }
         
                     for (i = 1; i <= 150; i++) {
-                        PLI_BRQ[i].ParseCVs(Bytes);
+                        PLI_BRQ[i].ParseCVs();
                     }
         
                     for (i = 1; i <= 150; i++) {
-                        PLI_HI[i].ParseCVs(Bytes);
+                        PLI_HI[i].ParseCVs();
                     }
         
                     for (i = 1; i <= 150; i++) {
-                        PLI_MS[i].ParseCVs(Bytes);
+                        PLI_MS[i].ParseCVs();
                     }
         
                     for (i = 1; i <= 150; i++) {
-                        PLI_MD[i].ParseCVs(Bytes);
+                        PLI_MD[i].ParseCVs();
                     }
         
                     for (i = 1; i <= 150; i++) {
-                        PLI_RC[i].ParseCVs(Bytes);
+                        PLI_RC[i].ParseCVs();
                     }
         
                     for (i = 1; i <= 150; i++) {
-                        PLI_TC[i].ParseCVs(Bytes);
+                        PLI_TC[i].ParseCVs();
                     }
         
                     for (i = 1; i <= 150; i++) {
-                        PLI_AC[i].ParseCVs(Bytes);
+                        PLI_AC[i].ParseCVs();
                     }
         
                     for (i = 1; i <= 150; i++) {
-                        PLI_HC[i].ParseCVs(Bytes);
+                        PLI_HC[i].ParseCVs();
                     }
         
                     for (i = 1; i <= 150; i++) {
-                        PLI_SC[i].ParseCVs(Bytes);
+                        PLI_SC[i].ParseCVs();
                     }
         
                     for (i = 1; i <= 150; i++) {
-                        PLI_EC[i].ParseCVs(Bytes);
+                        PLI_EC[i].ParseCVs();
                     }
         
                     for (i = 1; i <= 150; i++) {
-                        PLI_R[i].ParseCVs(Bytes);
+                        PLI_R[i].ParseCVs();
                     }
         
                     for (i = 1; i <= 150; i++) {
-                        PLI_T[i].ParseCVs(Bytes);
+                        PLI_T[i].ParseCVs();
                     }
         
                     for (i = 1; i <= 150; i++) {
-                        PLI_A[i].ParseCVs(Bytes);
+                        PLI_A[i].ParseCVs();
                     }
         
                     for (i = 1; i <= 150; i++) {
-                        PLI_H[i].ParseCVs(Bytes);
+                        PLI_H[i].ParseCVs();
                     }
         
                     for (i = 1; i <= 150; i++) {
-                        PLI_S[i].ParseCVs(Bytes);
+                        PLI_S[i].ParseCVs();
                     }
         
                     for (i = 1; i <= 150; i++) {
-                        PLI_E[i].ParseCVs(Bytes);
+                        PLI_E[i].ParseCVs();
                     }
         
                     for (i = 1; i <= 150; i++) {
-                        PLI_I[i].ParseCVs(Bytes);
+                        PLI_I[i].ParseCVs();
                     }
         
                     for (i = 1; i <= 150; i++) {
-                        PLI_C[i].ParseCVs(Bytes);
+                        PLI_C[i].ParseCVs();
                     }
         
                     for (i = 1; i <= 150; i++) {
-                        PLI_AD[i].ParseCVs(Bytes);
+                        PLI_AD[i].ParseCVs();
                     }
         
                     for (i = 1; i <= 150; i++) {
-                        PLI_HD[i].ParseCVs(Bytes);
+                        PLI_HD[i].ParseCVs();
                     }
         
                     for (i = 1; i <= 150; i++) {
-                        PLI_SD[i].ParseCVs(Bytes);
+                        PLI_SD[i].ParseCVs();
                     }
         
                     for (i = 1; i <= 150; i++) {
-                        PLI_FI[i].ParseCVs(Bytes);
+                        PLI_FI[i].ParseCVs();
                     }
         
                     for (i = 1; i <= 150; i++) {
-                        PLI_W[i].ParseCVs(Bytes);
+                        PLI_W[i].ParseCVs();
                     }
         
                     for (i = 1; i <= 150; i++) {
-                        PLI_P[i].ParseCVs(Bytes);
+                        PLI_P[i].ParseCVs();
                     }
         
                     for (i = 1; i <= 150; i++) {
-                        PLI_PD[i].ParseCVs(Bytes);
+                        PLI_PD[i].ParseCVs();
                     }
         
                     for (i = 1; i <= 150; i++) {
-                        PLI_SS[i].ParseCVs(Bytes);
+                        PLI_SS[i].ParseCVs();
                     }
         
                     for (i = 1; i <= 150; i++) {
-                        PLI_NC[i].ParseCVs(Bytes);
+                        PLI_NC[i].ParseCVs();
                     }
         
                     for (i = 1; i <= 150; i++) {
-                        PLI_IN[i].ParseCVs(Bytes);
+                        PLI_IN[i].ParseCVs();
                     }
         
                     for (i = 1; i <= 150; i++) {
-                        PLI_ER[i].ParseCVs(Bytes);
+                        PLI_ER[i].ParseCVs();
                     }
         
                     for (i = 1; i <= 150; i++) {
-                        PLI_OR[i].ParseCVs(Bytes);
+                        PLI_OR[i].ParseCVs();
                     }
         
                     for (i = 1; i <= 150; i++) {
-                        PLI_RR[i].ParseCVs(Bytes);
+                        PLI_RR[i].ParseCVs();
                     }
         
                     for (i = 1; i <= 150; i++) {
-                        PLI_CR[i].ParseCVs(Bytes);
+                        PLI_CR[i].ParseCVs();
                     }
         
                     for (i = 1; i <= 150; i++) {
-                        PLI_RE[i].ParseCVs(Bytes);
+                        PLI_RE[i].ParseCVs();
                     }
         
                     for (i = 1; i <= 150; i++) {
-                        PLI_DL[i].ParseCVs(Bytes);
+                        PLI_DL[i].ParseCVs();
                     }
         
                     for (i = 1; i <= 150; i++) {
-                        PLI_WC[i].ParseCVs(Bytes);
+                        PLI_WC[i].ParseCVs();
                     }
         
                     for (i = 1; i <= 150; i++) {
-                        PLI_II[i].ParseCVs(Bytes);
+                        PLI_II[i].ParseCVs();
                     }
         
                     for (i = 1; i <= 150; i++) {
-                        PLI_HA[i].ParseCVs(Bytes);
+                        PLI_HA[i].ParseCVs();
                     }
         
                 }

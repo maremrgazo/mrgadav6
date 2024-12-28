@@ -3,6 +3,17 @@ import json
 import os
 from mrgada import DATA_BLOCK_to_json
 
+
+def tia_to_mrgada(input):
+    tia_to_mrgada_dict = {"Int": "int", "Bool": "bool", "Word": "ushort"}
+    try:
+        output = tia_to_mrgada_dict[input]
+    except:
+        output = "Nullable<bool>"
+
+    return output
+
+
 dot_db_path = (
     r"C:\Users\lazar\Desktop\mrgadav6\mrgada\UserGenerated\Imports\MRP6\test.db"
 )
@@ -137,7 +148,7 @@ using static mrgada.S7Collector;
 
 public static partial class mrgada
 {"{"}
-    public partial class {project_name}
+    public partial class _{project_name}
     {"{"}
         public class c_{db_name}: mrgada.S7Db
         {"{"}
@@ -145,15 +156,15 @@ public static partial class mrgada
             
 """
     for var in json_data[db_name]:
-        out += f"""                public List<S7Var<{var["type"]}>> {var["name"]} = [];\n"""
+        out += f"""                public List<S7Var<{tia_to_mrgada(var["type"])}>> {var["name"]} = [];\n"""
 
-    out += """
+    out += f"""
         #endregion
 
                 private mrgada.S7ClientCollector _s7CollectorClient;
                 private S7.Net.Plc _s7Plc;
-                public c_dbAnalogSensorsSCADA(int num, int len, mrgada.S7ClientCollector s7CollectorClient, S7.Net.Plc s7Plc) : base(num, len)
-                {
+                public c_{db_name}(int num, int len, mrgada.S7ClientCollector s7CollectorClient, S7.Net.Plc s7Plc) : base(num, len)
+                {"{"}
                     _s7CollectorClient = s7CollectorClient;
                     _s7Plc = s7Plc;
 
@@ -190,12 +201,13 @@ public static partial class mrgada
 
             public override void ParseCVs()
             {
+                int i = 0;
                 """
 
     for var in json_data[db_name]:
         out += f"""
                     for (i = {var["arraystartindex"]}; i <= {var["arrayendindex"]}; i++) {"{"}
-                        {var["name"]}[i].ParseCVs(Bytes);
+                        {var["name"]}[i].ParseCVs();
                     {"}"}
         """
     out += """

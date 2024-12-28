@@ -4,19 +4,19 @@ using static mrgada.S7Collector;
 
 public static partial class mrgada
 {
-    public partial class MRP6
+    public partial class _MRP6
     {
         public class c_dbUnit: mrgada.S7Db
         {
             #region public vars
             
-                public List<S7Var<udtUnit>> Unit = [];
+                public List<S7Var<Nullable<bool>>> Unit = [];
 
         #endregion
 
                 private mrgada.S7ClientCollector _s7CollectorClient;
                 private S7.Net.Plc _s7Plc;
-                public c_dbAnalogSensorsSCADA(int num, int len, mrgada.S7ClientCollector s7CollectorClient, S7.Net.Plc s7Plc) : base(num, len)
+                public c_dbUnit(int num, int len, mrgada.S7ClientCollector s7CollectorClient, S7.Net.Plc s7Plc) : base(num, len)
                 {
                     _s7CollectorClient = s7CollectorClient;
                     _s7Plc = s7Plc;
@@ -45,9 +45,10 @@ public static partial class mrgada
 
             public override void ParseCVs()
             {
+                int i = 0;
                 
                     for (i = 1; i <= 10; i++) {
-                        Unit[i].ParseCVs(Bytes);
+                        Unit[i].ParseCVs();
                     }
         
                 }
