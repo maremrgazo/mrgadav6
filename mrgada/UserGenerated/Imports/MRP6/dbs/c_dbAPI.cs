@@ -1,6 +1,8 @@
 
     
 using static mrgada.S7Collector;
+using System;
+using System.Collections.Generic;
 
 public static partial class mrgada
 {
