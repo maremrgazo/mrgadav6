@@ -1,0 +1,365 @@
+{
+    "dbAPI": [
+        {
+            "name": "PdbmApi",
+            "isarray": true,
+            "arraystartindex": "0",
+            "arrayendindex": "4",
+            "type": "udt_API_Full"
+        }
+    ],
+    "dbUnit": [
+        {
+            "name": "Unit",
+            "isarray": true,
+            "arraystartindex": "1",
+            "arrayendindex": "10",
+            "type": "udtUnit"
+        }
+    ],
+    "dbPLI": [
+        {
+            "name": "PLI_EX",
+            "isarray": true,
+            "arraystartindex": "1",
+            "arrayendindex": "150",
+            "type": "Int"
+        },
+        {
+            "name": "PLI_ST",
+            "isarray": true,
+            "arraystartindex": "1",
+            "arrayendindex": "150",
+            "type": "Int"
+        },
+        {
+            "name": "PLI_SI",
+            "isarray": true,
+            "arraystartindex": "1",
+            "arrayendindex": "150",
+            "type": "Int"
+        },
+        {
+            "name": "PLI_OP",
+            "isarray": true,
+            "arraystartindex": "1",
+            "arrayendindex": "150",
+            "type": "Int"
+        },
+        {
+            "name": "PLI_WR",
+            "isarray": true,
+            "arraystartindex": "1",
+            "arrayendindex": "150",
+            "type": "Word"
+        },
+        {
+            "name": "PLI_OC",
+            "isarray": true,
+            "arraystartindex": "1",
+            "arrayendindex": "150",
+            "type": "Int"
+        },
+        {
+            "name": "PLI_CD",
+            "isarray": true,
+            "arraystartindex": "1",
+            "arrayendindex": "150",
+            "type": "Int"
+        },
+        {
+            "name": "PLI_IS",
+            "isarray": true,
+            "arraystartindex": "1",
+            "arrayendindex": "150",
+            "type": "Int"
+        },
+        {
+            "name": "PLI_UN",
+            "isarray": true,
+            "arraystartindex": "1",
+            "arrayendindex": "150",
+            "type": "Int"
+        },
+        {
+            "name": "PLI_F",
+            "isarray": true,
+            "arraystartindex": "1",
+            "arrayendindex": "150",
+            "type": "Int"
+        },
+        {
+            "name": "PLI_RQ",
+            "isarray": true,
+            "arraystartindex": "1",
+            "arrayendindex": "150",
+            "type": "Int"
+        },
+        {
+            "name": "PLI_SB",
+            "isarray": true,
+            "arraystartindex": "1",
+            "arrayendindex": "150",
+            "type": "Int"
+        },
+        {
+            "name": "PLI_BRQ",
+            "isarray": true,
+            "arraystartindex": "1",
+            "arrayendindex": "150",
+            "type": "Int"
+        },
+        {
+            "name": "PLI_HI",
+            "isarray": true,
+            "arraystartindex": "1",
+            "arrayendindex": "150",
+            "type": "Int"
+        },
+        {
+            "name": "PLI_MS",
+            "isarray": true,
+            "arraystartindex": "1",
+            "arrayendindex": "150",
+            "type": "Int"
+        },
+        {
+            "name": "PLI_MD",
+            "isarray": true,
+            "arraystartindex": "1",
+            "arrayendindex": "150",
+            "type": "Int"
+        },
+        {
+            "name": "PLI_RC",
+            "isarray": true,
+            "arraystartindex": "1",
+            "arrayendindex": "150",
+            "type": "Bool"
+        },
+        {
+            "name": "PLI_TC",
+            "isarray": true,
+            "arraystartindex": "1",
+            "arrayendindex": "150",
+            "type": "Bool"
+        },
+        {
+            "name": "PLI_AC",
+            "isarray": true,
+            "arraystartindex": "1",
+            "arrayendindex": "150",
+            "type": "Bool"
+        },
+        {
+            "name": "PLI_HC",
+            "isarray": true,
+            "arraystartindex": "1",
+            "arrayendindex": "150",
+            "type": "Bool"
+        },
+        {
+            "name": "PLI_SC",
+            "isarray": true,
+            "arraystartindex": "1",
+            "arrayendindex": "150",
+            "type": "Bool"
+        },
+        {
+            "name": "PLI_EC",
+            "isarray": true,
+            "arraystartindex": "1",
+            "arrayendindex": "150",
+            "type": "Bool"
+        },
+        {
+            "name": "PLI_R",
+            "isarray": true,
+            "arraystartindex": "1",
+            "arrayendindex": "150",
+            "type": "Bool"
+        },
+        {
+            "name": "PLI_T",
+            "isarray": true,
+            "arraystartindex": "1",
+            "arrayendindex": "150",
+            "type": "Bool"
+        },
+        {
+            "name": "PLI_A",
+            "isarray": true,
+            "arraystartindex": "1",
+            "arrayendindex": "150",
+            "type": "Bool"
+        },
+        {
+            "name": "PLI_H",
+            "isarray": true,
+            "arraystartindex": "1",
+            "arrayendindex": "150",
+            "type": "Bool"
+        },
+        {
+            "name": "PLI_S",
+            "isarray": true,
+            "arraystartindex": "1",
+            "arrayendindex": "150",
+            "type": "Bool"
+        },
+        {
+            "name": "PLI_E",
+            "isarray": true,
+            "arraystartindex": "1",
+            "arrayendindex": "150",
+            "type": "Bool"
+        },
+        {
+            "name": "PLI_I",
+            "isarray": true,
+            "arraystartindex": "1",
+            "arrayendindex": "150",
+            "type": "Bool"
+        },
+        {
+            "name": "PLI_C",
+            "isarray": true,
+            "arraystartindex": "1",
+            "arrayendindex": "150",
+            "type": "Bool"
+        },
+        {
+            "name": "PLI_AD",
+            "isarray": true,
+            "arraystartindex": "1",
+            "arrayendindex": "150",
+            "type": "Bool"
+        },
+        {
+            "name": "PLI_HD",
+            "isarray": true,
+            "arraystartindex": "1",
+            "arrayendindex": "150",
+            "type": "Bool"
+        },
+        {
+            "name": "PLI_SD",
+            "isarray": true,
+            "arraystartindex": "1",
+            "arrayendindex": "150",
+            "type": "Bool"
+        },
+        {
+            "name": "PLI_FI",
+            "isarray": true,
+            "arraystartindex": "1",
+            "arrayendindex": "150",
+            "type": "Bool"
+        },
+        {
+            "name": "PLI_W",
+            "isarray": true,
+            "arraystartindex": "1",
+            "arrayendindex": "150",
+            "type": "Bool"
+        },
+        {
+            "name": "PLI_P",
+            "isarray": true,
+            "arraystartindex": "1",
+            "arrayendindex": "150",
+            "type": "Bool"
+        },
+        {
+            "name": "PLI_PD",
+            "isarray": true,
+            "arraystartindex": "1",
+            "arrayendindex": "150",
+            "type": "Bool"
+        },
+        {
+            "name": "PLI_SS",
+            "isarray": true,
+            "arraystartindex": "1",
+            "arrayendindex": "150",
+            "type": "Bool"
+        },
+        {
+            "name": "PLI_NC",
+            "isarray": true,
+            "arraystartindex": "1",
+            "arrayendindex": "150",
+            "type": "Bool"
+        },
+        {
+            "name": "PLI_IN",
+            "isarray": true,
+            "arraystartindex": "1",
+            "arrayendindex": "150",
+            "type": "Bool"
+        },
+        {
+            "name": "PLI_ER",
+            "isarray": true,
+            "arraystartindex": "1",
+            "arrayendindex": "150",
+            "type": "Bool"
+        },
+        {
+            "name": "PLI_OR",
+            "isarray": true,
+            "arraystartindex": "1",
+            "arrayendindex": "150",
+            "type": "Bool"
+        },
+        {
+            "name": "PLI_RR",
+            "isarray": true,
+            "arraystartindex": "1",
+            "arrayendindex": "150",
+            "type": "Bool"
+        },
+        {
+            "name": "PLI_CR",
+            "isarray": true,
+            "arraystartindex": "1",
+            "arrayendindex": "150",
+            "type": "Bool"
+        },
+        {
+            "name": "PLI_RE",
+            "isarray": true,
+            "arraystartindex": "1",
+            "arrayendindex": "150",
+            "type": "Bool"
+        },
+        {
+            "name": "PLI_DL",
+            "isarray": true,
+            "arraystartindex": "1",
+            "arrayendindex": "150",
+            "type": "Bool"
+        },
+        {
+            "name": "PLI_WC",
+            "isarray": true,
+            "arraystartindex": "1",
+            "arrayendindex": "150",
+            "type": "Bool"
+        },
+        {
+            "name": "PLI_II",
+            "isarray": true,
+            "arraystartindex": "1",
+            "arrayendindex": "150",
+            "type": "Bool"
+        },
+        {
+            "name": "PLI_HA",
+            "isarray": true,
+            "arraystartindex": "1",
+            "arrayendindex": "150",
+            "type": "Bool"
+        }
+    ]
+}
