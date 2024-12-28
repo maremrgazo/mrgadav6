@@ -31,7 +31,7 @@ public static partial class mrgada
         private CancellationTokenSource? _ctsSend;
 
         private bool b_send;
-        private int i_sendTimeout = 50;
+        private int i_sendTimeout = 25;
 
         private bool _plcConnected = false;
         public bool PlcConnected => _plcConnected;
