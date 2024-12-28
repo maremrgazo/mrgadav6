@@ -5,11 +5,11 @@ from mrgada import DATA_BLOCK_to_json
 
 
 def tia_to_mrgada(input):
-    tia_to_mrgada_dict = {"Int": "int", "Bool": "bool", "Word": "ushort"}
+    tia_to_mrgada_dict = {"Int": "Int16", "Bool": "bool", "Word": "Int16"}
     try:
         output = tia_to_mrgada_dict[input]
     except:
-        output = "Nullable<bool>"
+        output = "Int64"
 
     return output
 
@@ -156,7 +156,7 @@ public static partial class mrgada
             
 """
     for var in json_data[db_name]:
-        out += f"""                public List<S7Var<{tia_to_mrgada(var["type"])}>> {var["name"]} = [];\n"""
+        out += f"""                public List<S7Var<{tia_to_mrgada(var["type"])}>> {var["name"]} = new({int(var["arraystartindex"])+int(var["arrayendindex"])});\n"""
 
     out += f"""
         #endregion
@@ -174,8 +174,8 @@ public static partial class mrgada
 
     for var in json_data[db_name]:
         out += f"""
-                    for (i = {var["arraystartindex"]}; i <= {var["arrayendindex"]}; i++) {"{"}
-                        {var["name"]}[i] = new(this, s7CollectorClient, s7Plc);
+                    for (i = 0; i <= {var["arrayendindex"]}; i++) {"{"}
+                        {var["name"]}.Insert(i, new(this, s7CollectorClient, s7Plc));
                     {"}"}
         """
 
@@ -191,6 +191,7 @@ public static partial class mrgada
             """
     for var in json_data[db_name]:
         out += f"""
+                    bitOffset = NearestDivisible((int)Math.Round(((float)bitOffset / 8.0f)), Math.Max(sizeof({tia_to_mrgada(var["type"])}), 2)) * 8; // align bit offset because it is start of array
                     for (i = {var["arraystartindex"]}; i <= {var["arrayendindex"]}; i++) {"{"}
                         bitOffset = {var["name"]}[i].AlignAndIncrement(bitOffset);
                     {"}"}

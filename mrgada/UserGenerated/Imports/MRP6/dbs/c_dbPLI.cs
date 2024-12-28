@@ -10,55 +10,55 @@ public static partial class mrgada
         {
             #region public vars
             
-                public List<S7Var<int>> PLI_EX = [];
-                public List<S7Var<int>> PLI_ST = [];
-                public List<S7Var<int>> PLI_SI = [];
-                public List<S7Var<int>> PLI_OP = [];
-                public List<S7Var<ushort>> PLI_WR = [];
-                public List<S7Var<int>> PLI_OC = [];
-                public List<S7Var<int>> PLI_CD = [];
-                public List<S7Var<int>> PLI_IS = [];
-                public List<S7Var<int>> PLI_UN = [];
-                public List<S7Var<int>> PLI_F = [];
-                public List<S7Var<int>> PLI_RQ = [];
-                public List<S7Var<int>> PLI_SB = [];
-                public List<S7Var<int>> PLI_BRQ = [];
-                public List<S7Var<int>> PLI_HI = [];
-                public List<S7Var<int>> PLI_MS = [];
-                public List<S7Var<int>> PLI_MD = [];
-                public List<S7Var<bool>> PLI_RC = [];
-                public List<S7Var<bool>> PLI_TC = [];
-                public List<S7Var<bool>> PLI_AC = [];
-                public List<S7Var<bool>> PLI_HC = [];
-                public List<S7Var<bool>> PLI_SC = [];
-                public List<S7Var<bool>> PLI_EC = [];
-                public List<S7Var<bool>> PLI_R = [];
-                public List<S7Var<bool>> PLI_T = [];
-                public List<S7Var<bool>> PLI_A = [];
-                public List<S7Var<bool>> PLI_H = [];
-                public List<S7Var<bool>> PLI_S = [];
-                public List<S7Var<bool>> PLI_E = [];
-                public List<S7Var<bool>> PLI_I = [];
-                public List<S7Var<bool>> PLI_C = [];
-                public List<S7Var<bool>> PLI_AD = [];
-                public List<S7Var<bool>> PLI_HD = [];
-                public List<S7Var<bool>> PLI_SD = [];
-                public List<S7Var<bool>> PLI_FI = [];
-                public List<S7Var<bool>> PLI_W = [];
-                public List<S7Var<bool>> PLI_P = [];
-                public List<S7Var<bool>> PLI_PD = [];
-                public List<S7Var<bool>> PLI_SS = [];
-                public List<S7Var<bool>> PLI_NC = [];
-                public List<S7Var<bool>> PLI_IN = [];
-                public List<S7Var<bool>> PLI_ER = [];
-                public List<S7Var<bool>> PLI_OR = [];
-                public List<S7Var<bool>> PLI_RR = [];
-                public List<S7Var<bool>> PLI_CR = [];
-                public List<S7Var<bool>> PLI_RE = [];
-                public List<S7Var<bool>> PLI_DL = [];
-                public List<S7Var<bool>> PLI_WC = [];
-                public List<S7Var<bool>> PLI_II = [];
-                public List<S7Var<bool>> PLI_HA = [];
+                public List<S7Var<Int16>> PLI_EX = new(151);
+                public List<S7Var<Int16>> PLI_ST = new(151);
+                public List<S7Var<Int16>> PLI_SI = new(151);
+                public List<S7Var<Int16>> PLI_OP = new(151);
+                public List<S7Var<Int16>> PLI_WR = new(151);
+                public List<S7Var<Int16>> PLI_OC = new(151);
+                public List<S7Var<Int16>> PLI_CD = new(151);
+                public List<S7Var<Int16>> PLI_IS = new(151);
+                public List<S7Var<Int16>> PLI_UN = new(151);
+                public List<S7Var<Int16>> PLI_F = new(151);
+                public List<S7Var<Int16>> PLI_RQ = new(151);
+                public List<S7Var<Int16>> PLI_SB = new(151);
+                public List<S7Var<Int16>> PLI_BRQ = new(151);
+                public List<S7Var<Int16>> PLI_HI = new(151);
+                public List<S7Var<Int16>> PLI_MS = new(151);
+                public List<S7Var<Int16>> PLI_MD = new(151);
+                public List<S7Var<bool>> PLI_RC = new(151);
+                public List<S7Var<bool>> PLI_TC = new(151);
+                public List<S7Var<bool>> PLI_AC = new(151);
+                public List<S7Var<bool>> PLI_HC = new(151);
+                public List<S7Var<bool>> PLI_SC = new(151);
+                public List<S7Var<bool>> PLI_EC = new(151);
+                public List<S7Var<bool>> PLI_R = new(151);
+                public List<S7Var<bool>> PLI_T = new(151);
+                public List<S7Var<bool>> PLI_A = new(151);
+                public List<S7Var<bool>> PLI_H = new(151);
+                public List<S7Var<bool>> PLI_S = new(151);
+                public List<S7Var<bool>> PLI_E = new(151);
+                public List<S7Var<bool>> PLI_I = new(151);
+                public List<S7Var<bool>> PLI_C = new(151);
+                public List<S7Var<bool>> PLI_AD = new(151);
+                public List<S7Var<bool>> PLI_HD = new(151);
+                public List<S7Var<bool>> PLI_SD = new(151);
+                public List<S7Var<bool>> PLI_FI = new(151);
+                public List<S7Var<bool>> PLI_W = new(151);
+                public List<S7Var<bool>> PLI_P = new(151);
+                public List<S7Var<bool>> PLI_PD = new(151);
+                public List<S7Var<bool>> PLI_SS = new(151);
+                public List<S7Var<bool>> PLI_NC = new(151);
+                public List<S7Var<bool>> PLI_IN = new(151);
+                public List<S7Var<bool>> PLI_ER = new(151);
+                public List<S7Var<bool>> PLI_OR = new(151);
+                public List<S7Var<bool>> PLI_RR = new(151);
+                public List<S7Var<bool>> PLI_CR = new(151);
+                public List<S7Var<bool>> PLI_RE = new(151);
+                public List<S7Var<bool>> PLI_DL = new(151);
+                public List<S7Var<bool>> PLI_WC = new(151);
+                public List<S7Var<bool>> PLI_II = new(151);
+                public List<S7Var<bool>> PLI_HA = new(151);
 
         #endregion
 
@@ -72,200 +72,200 @@ public static partial class mrgada
                     #region init vars
                     int i = 0;
     
-                    for (i = 1; i <= 150; i++) {
-                        PLI_EX[i] = new(this, s7CollectorClient, s7Plc);
+                    for (i = 0; i <= 150; i++) {
+                        PLI_EX.Insert(i, new(this, s7CollectorClient, s7Plc));
                     }
         
-                    for (i = 1; i <= 150; i++) {
-                        PLI_ST[i] = new(this, s7CollectorClient, s7Plc);
+                    for (i = 0; i <= 150; i++) {
+                        PLI_ST.Insert(i, new(this, s7CollectorClient, s7Plc));
                     }
         
-                    for (i = 1; i <= 150; i++) {
-                        PLI_SI[i] = new(this, s7CollectorClient, s7Plc);
+                    for (i = 0; i <= 150; i++) {
+                        PLI_SI.Insert(i, new(this, s7CollectorClient, s7Plc));
                     }
         
-                    for (i = 1; i <= 150; i++) {
-                        PLI_OP[i] = new(this, s7CollectorClient, s7Plc);
+                    for (i = 0; i <= 150; i++) {
+                        PLI_OP.Insert(i, new(this, s7CollectorClient, s7Plc));
                     }
         
-                    for (i = 1; i <= 150; i++) {
-                        PLI_WR[i] = new(this, s7CollectorClient, s7Plc);
+                    for (i = 0; i <= 150; i++) {
+                        PLI_WR.Insert(i, new(this, s7CollectorClient, s7Plc));
                     }
         
-                    for (i = 1; i <= 150; i++) {
-                        PLI_OC[i] = new(this, s7CollectorClient, s7Plc);
+                    for (i = 0; i <= 150; i++) {
+                        PLI_OC.Insert(i, new(this, s7CollectorClient, s7Plc));
                     }
         
-                    for (i = 1; i <= 150; i++) {
-                        PLI_CD[i] = new(this, s7CollectorClient, s7Plc);
+                    for (i = 0; i <= 150; i++) {
+                        PLI_CD.Insert(i, new(this, s7CollectorClient, s7Plc));
                     }
         
-                    for (i = 1; i <= 150; i++) {
-                        PLI_IS[i] = new(this, s7CollectorClient, s7Plc);
+                    for (i = 0; i <= 150; i++) {
+                        PLI_IS.Insert(i, new(this, s7CollectorClient, s7Plc));
                     }
         
-                    for (i = 1; i <= 150; i++) {
-                        PLI_UN[i] = new(this, s7CollectorClient, s7Plc);
+                    for (i = 0; i <= 150; i++) {
+                        PLI_UN.Insert(i, new(this, s7CollectorClient, s7Plc));
                     }
         
-                    for (i = 1; i <= 150; i++) {
-                        PLI_F[i] = new(this, s7CollectorClient, s7Plc);
+                    for (i = 0; i <= 150; i++) {
+                        PLI_F.Insert(i, new(this, s7CollectorClient, s7Plc));
                     }
         
-                    for (i = 1; i <= 150; i++) {
-                        PLI_RQ[i] = new(this, s7CollectorClient, s7Plc);
+                    for (i = 0; i <= 150; i++) {
+                        PLI_RQ.Insert(i, new(this, s7CollectorClient, s7Plc));
                     }
         
-                    for (i = 1; i <= 150; i++) {
-                        PLI_SB[i] = new(this, s7CollectorClient, s7Plc);
+                    for (i = 0; i <= 150; i++) {
+                        PLI_SB.Insert(i, new(this, s7CollectorClient, s7Plc));
                     }
         
-                    for (i = 1; i <= 150; i++) {
-                        PLI_BRQ[i] = new(this, s7CollectorClient, s7Plc);
+                    for (i = 0; i <= 150; i++) {
+                        PLI_BRQ.Insert(i, new(this, s7CollectorClient, s7Plc));
                     }
         
-                    for (i = 1; i <= 150; i++) {
-                        PLI_HI[i] = new(this, s7CollectorClient, s7Plc);
+                    for (i = 0; i <= 150; i++) {
+                        PLI_HI.Insert(i, new(this, s7CollectorClient, s7Plc));
                     }
         
-                    for (i = 1; i <= 150; i++) {
-                        PLI_MS[i] = new(this, s7CollectorClient, s7Plc);
+                    for (i = 0; i <= 150; i++) {
+                        PLI_MS.Insert(i, new(this, s7CollectorClient, s7Plc));
                     }
         
-                    for (i = 1; i <= 150; i++) {
-                        PLI_MD[i] = new(this, s7CollectorClient, s7Plc);
+                    for (i = 0; i <= 150; i++) {
+                        PLI_MD.Insert(i, new(this, s7CollectorClient, s7Plc));
                     }
         
-                    for (i = 1; i <= 150; i++) {
-                        PLI_RC[i] = new(this, s7CollectorClient, s7Plc);
+                    for (i = 0; i <= 150; i++) {
+                        PLI_RC.Insert(i, new(this, s7CollectorClient, s7Plc));
                     }
         
-                    for (i = 1; i <= 150; i++) {
-                        PLI_TC[i] = new(this, s7CollectorClient, s7Plc);
+                    for (i = 0; i <= 150; i++) {
+                        PLI_TC.Insert(i, new(this, s7CollectorClient, s7Plc));
                     }
         
-                    for (i = 1; i <= 150; i++) {
-                        PLI_AC[i] = new(this, s7CollectorClient, s7Plc);
+                    for (i = 0; i <= 150; i++) {
+                        PLI_AC.Insert(i, new(this, s7CollectorClient, s7Plc));
                     }
         
-                    for (i = 1; i <= 150; i++) {
-                        PLI_HC[i] = new(this, s7CollectorClient, s7Plc);
+                    for (i = 0; i <= 150; i++) {
+                        PLI_HC.Insert(i, new(this, s7CollectorClient, s7Plc));
                     }
         
-                    for (i = 1; i <= 150; i++) {
-                        PLI_SC[i] = new(this, s7CollectorClient, s7Plc);
+                    for (i = 0; i <= 150; i++) {
+                        PLI_SC.Insert(i, new(this, s7CollectorClient, s7Plc));
                     }
         
-                    for (i = 1; i <= 150; i++) {
-                        PLI_EC[i] = new(this, s7CollectorClient, s7Plc);
+                    for (i = 0; i <= 150; i++) {
+                        PLI_EC.Insert(i, new(this, s7CollectorClient, s7Plc));
                     }
         
-                    for (i = 1; i <= 150; i++) {
-                        PLI_R[i] = new(this, s7CollectorClient, s7Plc);
+                    for (i = 0; i <= 150; i++) {
+                        PLI_R.Insert(i, new(this, s7CollectorClient, s7Plc));
                     }
         
-                    for (i = 1; i <= 150; i++) {
-                        PLI_T[i] = new(this, s7CollectorClient, s7Plc);
+                    for (i = 0; i <= 150; i++) {
+                        PLI_T.Insert(i, new(this, s7CollectorClient, s7Plc));
                     }
         
-                    for (i = 1; i <= 150; i++) {
-                        PLI_A[i] = new(this, s7CollectorClient, s7Plc);
+                    for (i = 0; i <= 150; i++) {
+                        PLI_A.Insert(i, new(this, s7CollectorClient, s7Plc));
                     }
         
-                    for (i = 1; i <= 150; i++) {
-                        PLI_H[i] = new(this, s7CollectorClient, s7Plc);
+                    for (i = 0; i <= 150; i++) {
+                        PLI_H.Insert(i, new(this, s7CollectorClient, s7Plc));
                     }
         
-                    for (i = 1; i <= 150; i++) {
-                        PLI_S[i] = new(this, s7CollectorClient, s7Plc);
+                    for (i = 0; i <= 150; i++) {
+                        PLI_S.Insert(i, new(this, s7CollectorClient, s7Plc));
                     }
         
-                    for (i = 1; i <= 150; i++) {
-                        PLI_E[i] = new(this, s7CollectorClient, s7Plc);
+                    for (i = 0; i <= 150; i++) {
+                        PLI_E.Insert(i, new(this, s7CollectorClient, s7Plc));
                     }
         
-                    for (i = 1; i <= 150; i++) {
-                        PLI_I[i] = new(this, s7CollectorClient, s7Plc);
+                    for (i = 0; i <= 150; i++) {
+                        PLI_I.Insert(i, new(this, s7CollectorClient, s7Plc));
                     }
         
-                    for (i = 1; i <= 150; i++) {
-                        PLI_C[i] = new(this, s7CollectorClient, s7Plc);
+                    for (i = 0; i <= 150; i++) {
+                        PLI_C.Insert(i, new(this, s7CollectorClient, s7Plc));
                     }
         
-                    for (i = 1; i <= 150; i++) {
-                        PLI_AD[i] = new(this, s7CollectorClient, s7Plc);
+                    for (i = 0; i <= 150; i++) {
+                        PLI_AD.Insert(i, new(this, s7CollectorClient, s7Plc));
                     }
         
-                    for (i = 1; i <= 150; i++) {
-                        PLI_HD[i] = new(this, s7CollectorClient, s7Plc);
+                    for (i = 0; i <= 150; i++) {
+                        PLI_HD.Insert(i, new(this, s7CollectorClient, s7Plc));
                     }
         
-                    for (i = 1; i <= 150; i++) {
-                        PLI_SD[i] = new(this, s7CollectorClient, s7Plc);
+                    for (i = 0; i <= 150; i++) {
+                        PLI_SD.Insert(i, new(this, s7CollectorClient, s7Plc));
                     }
         
-                    for (i = 1; i <= 150; i++) {
-                        PLI_FI[i] = new(this, s7CollectorClient, s7Plc);
+                    for (i = 0; i <= 150; i++) {
+                        PLI_FI.Insert(i, new(this, s7CollectorClient, s7Plc));
                     }
         
-                    for (i = 1; i <= 150; i++) {
-                        PLI_W[i] = new(this, s7CollectorClient, s7Plc);
+                    for (i = 0; i <= 150; i++) {
+                        PLI_W.Insert(i, new(this, s7CollectorClient, s7Plc));
                     }
         
-                    for (i = 1; i <= 150; i++) {
-                        PLI_P[i] = new(this, s7CollectorClient, s7Plc);
+                    for (i = 0; i <= 150; i++) {
+                        PLI_P.Insert(i, new(this, s7CollectorClient, s7Plc));
                     }
         
-                    for (i = 1; i <= 150; i++) {
-                        PLI_PD[i] = new(this, s7CollectorClient, s7Plc);
+                    for (i = 0; i <= 150; i++) {
+                        PLI_PD.Insert(i, new(this, s7CollectorClient, s7Plc));
                     }
         
-                    for (i = 1; i <= 150; i++) {
-                        PLI_SS[i] = new(this, s7CollectorClient, s7Plc);
+                    for (i = 0; i <= 150; i++) {
+                        PLI_SS.Insert(i, new(this, s7CollectorClient, s7Plc));
                     }
         
-                    for (i = 1; i <= 150; i++) {
-                        PLI_NC[i] = new(this, s7CollectorClient, s7Plc);
+                    for (i = 0; i <= 150; i++) {
+                        PLI_NC.Insert(i, new(this, s7CollectorClient, s7Plc));
                     }
         
-                    for (i = 1; i <= 150; i++) {
-                        PLI_IN[i] = new(this, s7CollectorClient, s7Plc);
+                    for (i = 0; i <= 150; i++) {
+                        PLI_IN.Insert(i, new(this, s7CollectorClient, s7Plc));
                     }
         
-                    for (i = 1; i <= 150; i++) {
-                        PLI_ER[i] = new(this, s7CollectorClient, s7Plc);
+                    for (i = 0; i <= 150; i++) {
+                        PLI_ER.Insert(i, new(this, s7CollectorClient, s7Plc));
                     }
         
-                    for (i = 1; i <= 150; i++) {
-                        PLI_OR[i] = new(this, s7CollectorClient, s7Plc);
+                    for (i = 0; i <= 150; i++) {
+                        PLI_OR.Insert(i, new(this, s7CollectorClient, s7Plc));
                     }
         
-                    for (i = 1; i <= 150; i++) {
-                        PLI_RR[i] = new(this, s7CollectorClient, s7Plc);
+                    for (i = 0; i <= 150; i++) {
+                        PLI_RR.Insert(i, new(this, s7CollectorClient, s7Plc));
                     }
         
-                    for (i = 1; i <= 150; i++) {
-                        PLI_CR[i] = new(this, s7CollectorClient, s7Plc);
+                    for (i = 0; i <= 150; i++) {
+                        PLI_CR.Insert(i, new(this, s7CollectorClient, s7Plc));
                     }
         
-                    for (i = 1; i <= 150; i++) {
-                        PLI_RE[i] = new(this, s7CollectorClient, s7Plc);
+                    for (i = 0; i <= 150; i++) {
+                        PLI_RE.Insert(i, new(this, s7CollectorClient, s7Plc));
                     }
         
-                    for (i = 1; i <= 150; i++) {
-                        PLI_DL[i] = new(this, s7CollectorClient, s7Plc);
+                    for (i = 0; i <= 150; i++) {
+                        PLI_DL.Insert(i, new(this, s7CollectorClient, s7Plc));
                     }
         
-                    for (i = 1; i <= 150; i++) {
-                        PLI_WC[i] = new(this, s7CollectorClient, s7Plc);
+                    for (i = 0; i <= 150; i++) {
+                        PLI_WC.Insert(i, new(this, s7CollectorClient, s7Plc));
                     }
         
-                    for (i = 1; i <= 150; i++) {
-                        PLI_II[i] = new(this, s7CollectorClient, s7Plc);
+                    for (i = 0; i <= 150; i++) {
+                        PLI_II.Insert(i, new(this, s7CollectorClient, s7Plc));
                     }
         
-                    for (i = 1; i <= 150; i++) {
-                        PLI_HA[i] = new(this, s7CollectorClient, s7Plc);
+                    for (i = 0; i <= 150; i++) {
+                        PLI_HA.Insert(i, new(this, s7CollectorClient, s7Plc));
                     }
         
             #endregion
@@ -277,198 +277,247 @@ public static partial class mrgada
                     int bitOffset = 0;
                     int i = 0;
             
+                    bitOffset = NearestDivisible((int)Math.Round(((float)bitOffset / 8.0f)), Math.Max(sizeof(Int16), 2)) * 8; // align bit offset because it is start of array
                     for (i = 1; i <= 150; i++) {
                         bitOffset = PLI_EX[i].AlignAndIncrement(bitOffset);
                     }
         
+                    bitOffset = NearestDivisible((int)Math.Round(((float)bitOffset / 8.0f)), Math.Max(sizeof(Int16), 2)) * 8; // align bit offset because it is start of array
                     for (i = 1; i <= 150; i++) {
                         bitOffset = PLI_ST[i].AlignAndIncrement(bitOffset);
                     }
         
+                    bitOffset = NearestDivisible((int)Math.Round(((float)bitOffset / 8.0f)), Math.Max(sizeof(Int16), 2)) * 8; // align bit offset because it is start of array
                     for (i = 1; i <= 150; i++) {
                         bitOffset = PLI_SI[i].AlignAndIncrement(bitOffset);
                     }
         
+                    bitOffset = NearestDivisible((int)Math.Round(((float)bitOffset / 8.0f)), Math.Max(sizeof(Int16), 2)) * 8; // align bit offset because it is start of array
                     for (i = 1; i <= 150; i++) {
                         bitOffset = PLI_OP[i].AlignAndIncrement(bitOffset);
                     }
         
+                    bitOffset = NearestDivisible((int)Math.Round(((float)bitOffset / 8.0f)), Math.Max(sizeof(Int16), 2)) * 8; // align bit offset because it is start of array
                     for (i = 1; i <= 150; i++) {
                         bitOffset = PLI_WR[i].AlignAndIncrement(bitOffset);
                     }
         
+                    bitOffset = NearestDivisible((int)Math.Round(((float)bitOffset / 8.0f)), Math.Max(sizeof(Int16), 2)) * 8; // align bit offset because it is start of array
                     for (i = 1; i <= 150; i++) {
                         bitOffset = PLI_OC[i].AlignAndIncrement(bitOffset);
                     }
         
+                    bitOffset = NearestDivisible((int)Math.Round(((float)bitOffset / 8.0f)), Math.Max(sizeof(Int16), 2)) * 8; // align bit offset because it is start of array
                     for (i = 1; i <= 150; i++) {
                         bitOffset = PLI_CD[i].AlignAndIncrement(bitOffset);
                     }
         
+                    bitOffset = NearestDivisible((int)Math.Round(((float)bitOffset / 8.0f)), Math.Max(sizeof(Int16), 2)) * 8; // align bit offset because it is start of array
                     for (i = 1; i <= 150; i++) {
                         bitOffset = PLI_IS[i].AlignAndIncrement(bitOffset);
                     }
         
+                    bitOffset = NearestDivisible((int)Math.Round(((float)bitOffset / 8.0f)), Math.Max(sizeof(Int16), 2)) * 8; // align bit offset because it is start of array
                     for (i = 1; i <= 150; i++) {
                         bitOffset = PLI_UN[i].AlignAndIncrement(bitOffset);
                     }
         
+                    bitOffset = NearestDivisible((int)Math.Round(((float)bitOffset / 8.0f)), Math.Max(sizeof(Int16), 2)) * 8; // align bit offset because it is start of array
                     for (i = 1; i <= 150; i++) {
                         bitOffset = PLI_F[i].AlignAndIncrement(bitOffset);
                     }
         
+                    bitOffset = NearestDivisible((int)Math.Round(((float)bitOffset / 8.0f)), Math.Max(sizeof(Int16), 2)) * 8; // align bit offset because it is start of array
                     for (i = 1; i <= 150; i++) {
                         bitOffset = PLI_RQ[i].AlignAndIncrement(bitOffset);
                     }
         
+                    bitOffset = NearestDivisible((int)Math.Round(((float)bitOffset / 8.0f)), Math.Max(sizeof(Int16), 2)) * 8; // align bit offset because it is start of array
                     for (i = 1; i <= 150; i++) {
                         bitOffset = PLI_SB[i].AlignAndIncrement(bitOffset);
                     }
         
+                    bitOffset = NearestDivisible((int)Math.Round(((float)bitOffset / 8.0f)), Math.Max(sizeof(Int16), 2)) * 8; // align bit offset because it is start of array
                     for (i = 1; i <= 150; i++) {
                         bitOffset = PLI_BRQ[i].AlignAndIncrement(bitOffset);
                     }
         
+                    bitOffset = NearestDivisible((int)Math.Round(((float)bitOffset / 8.0f)), Math.Max(sizeof(Int16), 2)) * 8; // align bit offset because it is start of array
                     for (i = 1; i <= 150; i++) {
                         bitOffset = PLI_HI[i].AlignAndIncrement(bitOffset);
                     }
         
+                    bitOffset = NearestDivisible((int)Math.Round(((float)bitOffset / 8.0f)), Math.Max(sizeof(Int16), 2)) * 8; // align bit offset because it is start of array
                     for (i = 1; i <= 150; i++) {
                         bitOffset = PLI_MS[i].AlignAndIncrement(bitOffset);
                     }
         
+                    bitOffset = NearestDivisible((int)Math.Round(((float)bitOffset / 8.0f)), Math.Max(sizeof(Int16), 2)) * 8; // align bit offset because it is start of array
                     for (i = 1; i <= 150; i++) {
                         bitOffset = PLI_MD[i].AlignAndIncrement(bitOffset);
                     }
         
+                    bitOffset = NearestDivisible((int)Math.Round(((float)bitOffset / 8.0f)), Math.Max(sizeof(bool), 2)) * 8; // align bit offset because it is start of array
                     for (i = 1; i <= 150; i++) {
                         bitOffset = PLI_RC[i].AlignAndIncrement(bitOffset);
                     }
         
+                    bitOffset = NearestDivisible((int)Math.Round(((float)bitOffset / 8.0f)), Math.Max(sizeof(bool), 2)) * 8; // align bit offset because it is start of array
                     for (i = 1; i <= 150; i++) {
                         bitOffset = PLI_TC[i].AlignAndIncrement(bitOffset);
                     }
         
+                    bitOffset = NearestDivisible((int)Math.Round(((float)bitOffset / 8.0f)), Math.Max(sizeof(bool), 2)) * 8; // align bit offset because it is start of array
                     for (i = 1; i <= 150; i++) {
                         bitOffset = PLI_AC[i].AlignAndIncrement(bitOffset);
                     }
         
+                    bitOffset = NearestDivisible((int)Math.Round(((float)bitOffset / 8.0f)), Math.Max(sizeof(bool), 2)) * 8; // align bit offset because it is start of array
                     for (i = 1; i <= 150; i++) {
                         bitOffset = PLI_HC[i].AlignAndIncrement(bitOffset);
                     }
         
+                    bitOffset = NearestDivisible((int)Math.Round(((float)bitOffset / 8.0f)), Math.Max(sizeof(bool), 2)) * 8; // align bit offset because it is start of array
                     for (i = 1; i <= 150; i++) {
                         bitOffset = PLI_SC[i].AlignAndIncrement(bitOffset);
                     }
         
+                    bitOffset = NearestDivisible((int)Math.Round(((float)bitOffset / 8.0f)), Math.Max(sizeof(bool), 2)) * 8; // align bit offset because it is start of array
                     for (i = 1; i <= 150; i++) {
                         bitOffset = PLI_EC[i].AlignAndIncrement(bitOffset);
                     }
         
+                    bitOffset = NearestDivisible((int)Math.Round(((float)bitOffset / 8.0f)), Math.Max(sizeof(bool), 2)) * 8; // align bit offset because it is start of array
                     for (i = 1; i <= 150; i++) {
                         bitOffset = PLI_R[i].AlignAndIncrement(bitOffset);
                     }
         
+                    bitOffset = NearestDivisible((int)Math.Round(((float)bitOffset / 8.0f)), Math.Max(sizeof(bool), 2)) * 8; // align bit offset because it is start of array
                     for (i = 1; i <= 150; i++) {
                         bitOffset = PLI_T[i].AlignAndIncrement(bitOffset);
                     }
         
+                    bitOffset = NearestDivisible((int)Math.Round(((float)bitOffset / 8.0f)), Math.Max(sizeof(bool), 2)) * 8; // align bit offset because it is start of array
                     for (i = 1; i <= 150; i++) {
                         bitOffset = PLI_A[i].AlignAndIncrement(bitOffset);
                     }
         
+                    bitOffset = NearestDivisible((int)Math.Round(((float)bitOffset / 8.0f)), Math.Max(sizeof(bool), 2)) * 8; // align bit offset because it is start of array
                     for (i = 1; i <= 150; i++) {
                         bitOffset = PLI_H[i].AlignAndIncrement(bitOffset);
                     }
         
+                    bitOffset = NearestDivisible((int)Math.Round(((float)bitOffset / 8.0f)), Math.Max(sizeof(bool), 2)) * 8; // align bit offset because it is start of array
                     for (i = 1; i <= 150; i++) {
                         bitOffset = PLI_S[i].AlignAndIncrement(bitOffset);
                     }
         
+                    bitOffset = NearestDivisible((int)Math.Round(((float)bitOffset / 8.0f)), Math.Max(sizeof(bool), 2)) * 8; // align bit offset because it is start of array
                     for (i = 1; i <= 150; i++) {
                         bitOffset = PLI_E[i].AlignAndIncrement(bitOffset);
                     }
         
+                    bitOffset = NearestDivisible((int)Math.Round(((float)bitOffset / 8.0f)), Math.Max(sizeof(bool), 2)) * 8; // align bit offset because it is start of array
                     for (i = 1; i <= 150; i++) {
                         bitOffset = PLI_I[i].AlignAndIncrement(bitOffset);
                     }
         
+                    bitOffset = NearestDivisible((int)Math.Round(((float)bitOffset / 8.0f)), Math.Max(sizeof(bool), 2)) * 8; // align bit offset because it is start of array
                     for (i = 1; i <= 150; i++) {
                         bitOffset = PLI_C[i].AlignAndIncrement(bitOffset);
                     }
         
+                    bitOffset = NearestDivisible((int)Math.Round(((float)bitOffset / 8.0f)), Math.Max(sizeof(bool), 2)) * 8; // align bit offset because it is start of array
                     for (i = 1; i <= 150; i++) {
                         bitOffset = PLI_AD[i].AlignAndIncrement(bitOffset);
                     }
         
+                    bitOffset = NearestDivisible((int)Math.Round(((float)bitOffset / 8.0f)), Math.Max(sizeof(bool), 2)) * 8; // align bit offset because it is start of array
                     for (i = 1; i <= 150; i++) {
                         bitOffset = PLI_HD[i].AlignAndIncrement(bitOffset);
                     }
         
+                    bitOffset = NearestDivisible((int)Math.Round(((float)bitOffset / 8.0f)), Math.Max(sizeof(bool), 2)) * 8; // align bit offset because it is start of array
                     for (i = 1; i <= 150; i++) {
                         bitOffset = PLI_SD[i].AlignAndIncrement(bitOffset);
                     }
         
+                    bitOffset = NearestDivisible((int)Math.Round(((float)bitOffset / 8.0f)), Math.Max(sizeof(bool), 2)) * 8; // align bit offset because it is start of array
                     for (i = 1; i <= 150; i++) {
                         bitOffset = PLI_FI[i].AlignAndIncrement(bitOffset);
                     }
         
+                    bitOffset = NearestDivisible((int)Math.Round(((float)bitOffset / 8.0f)), Math.Max(sizeof(bool), 2)) * 8; // align bit offset because it is start of array
                     for (i = 1; i <= 150; i++) {
                         bitOffset = PLI_W[i].AlignAndIncrement(bitOffset);
                     }
         
+                    bitOffset = NearestDivisible((int)Math.Round(((float)bitOffset / 8.0f)), Math.Max(sizeof(bool), 2)) * 8; // align bit offset because it is start of array
                     for (i = 1; i <= 150; i++) {
                         bitOffset = PLI_P[i].AlignAndIncrement(bitOffset);
                     }
         
+                    bitOffset = NearestDivisible((int)Math.Round(((float)bitOffset / 8.0f)), Math.Max(sizeof(bool), 2)) * 8; // align bit offset because it is start of array
                     for (i = 1; i <= 150; i++) {
                         bitOffset = PLI_PD[i].AlignAndIncrement(bitOffset);
                     }
         
+                    bitOffset = NearestDivisible((int)Math.Round(((float)bitOffset / 8.0f)), Math.Max(sizeof(bool), 2)) * 8; // align bit offset because it is start of array
                     for (i = 1; i <= 150; i++) {
                         bitOffset = PLI_SS[i].AlignAndIncrement(bitOffset);
                     }
         
+                    bitOffset = NearestDivisible((int)Math.Round(((float)bitOffset / 8.0f)), Math.Max(sizeof(bool), 2)) * 8; // align bit offset because it is start of array
                     for (i = 1; i <= 150; i++) {
                         bitOffset = PLI_NC[i].AlignAndIncrement(bitOffset);
                     }
         
+                    bitOffset = NearestDivisible((int)Math.Round(((float)bitOffset / 8.0f)), Math.Max(sizeof(bool), 2)) * 8; // align bit offset because it is start of array
                     for (i = 1; i <= 150; i++) {
                         bitOffset = PLI_IN[i].AlignAndIncrement(bitOffset);
                     }
         
+                    bitOffset = NearestDivisible((int)Math.Round(((float)bitOffset / 8.0f)), Math.Max(sizeof(bool), 2)) * 8; // align bit offset because it is start of array
                     for (i = 1; i <= 150; i++) {
                         bitOffset = PLI_ER[i].AlignAndIncrement(bitOffset);
                     }
         
+                    bitOffset = NearestDivisible((int)Math.Round(((float)bitOffset / 8.0f)), Math.Max(sizeof(bool), 2)) * 8; // align bit offset because it is start of array
                     for (i = 1; i <= 150; i++) {
                         bitOffset = PLI_OR[i].AlignAndIncrement(bitOffset);
                     }
         
+                    bitOffset = NearestDivisible((int)Math.Round(((float)bitOffset / 8.0f)), Math.Max(sizeof(bool), 2)) * 8; // align bit offset because it is start of array
                     for (i = 1; i <= 150; i++) {
                         bitOffset = PLI_RR[i].AlignAndIncrement(bitOffset);
                     }
         
+                    bitOffset = NearestDivisible((int)Math.Round(((float)bitOffset / 8.0f)), Math.Max(sizeof(bool), 2)) * 8; // align bit offset because it is start of array
                     for (i = 1; i <= 150; i++) {
                         bitOffset = PLI_CR[i].AlignAndIncrement(bitOffset);
                     }
         
+                    bitOffset = NearestDivisible((int)Math.Round(((float)bitOffset / 8.0f)), Math.Max(sizeof(bool), 2)) * 8; // align bit offset because it is start of array
                     for (i = 1; i <= 150; i++) {
                         bitOffset = PLI_RE[i].AlignAndIncrement(bitOffset);
                     }
         
+                    bitOffset = NearestDivisible((int)Math.Round(((float)bitOffset / 8.0f)), Math.Max(sizeof(bool), 2)) * 8; // align bit offset because it is start of array
                     for (i = 1; i <= 150; i++) {
                         bitOffset = PLI_DL[i].AlignAndIncrement(bitOffset);
                     }
         
+                    bitOffset = NearestDivisible((int)Math.Round(((float)bitOffset / 8.0f)), Math.Max(sizeof(bool), 2)) * 8; // align bit offset because it is start of array
                     for (i = 1; i <= 150; i++) {
                         bitOffset = PLI_WC[i].AlignAndIncrement(bitOffset);
                     }
         
+                    bitOffset = NearestDivisible((int)Math.Round(((float)bitOffset / 8.0f)), Math.Max(sizeof(bool), 2)) * 8; // align bit offset because it is start of array
                     for (i = 1; i <= 150; i++) {
                         bitOffset = PLI_II[i].AlignAndIncrement(bitOffset);
                     }
         
+                    bitOffset = NearestDivisible((int)Math.Round(((float)bitOffset / 8.0f)), Math.Max(sizeof(bool), 2)) * 8; // align bit offset because it is start of array
                     for (i = 1; i <= 150; i++) {
                         bitOffset = PLI_HA[i].AlignAndIncrement(bitOffset);
                     }

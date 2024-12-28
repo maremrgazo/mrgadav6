@@ -10,7 +10,7 @@ public static partial class mrgada
         {
             #region public vars
             
-                public List<S7Var<Nullable<bool>>> PdbmApi = [];
+                public List<S7Var<Int64>> PdbmApi = new(4);
 
         #endregion
 
@@ -25,7 +25,7 @@ public static partial class mrgada
                     int i = 0;
     
                     for (i = 0; i <= 4; i++) {
-                        PdbmApi[i] = new(this, s7CollectorClient, s7Plc);
+                        PdbmApi.Insert(i, new(this, s7CollectorClient, s7Plc));
                     }
         
             #endregion
@@ -37,6 +37,7 @@ public static partial class mrgada
                     int bitOffset = 0;
                     int i = 0;
             
+                    bitOffset = NearestDivisible((int)Math.Round(((float)bitOffset / 8.0f)), Math.Max(sizeof(Int64), 2)) * 8; // align bit offset because it is start of array
                     for (i = 0; i <= 4; i++) {
                         bitOffset = PdbmApi[i].AlignAndIncrement(bitOffset);
                     }

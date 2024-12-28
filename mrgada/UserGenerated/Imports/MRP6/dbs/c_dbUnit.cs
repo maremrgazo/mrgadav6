@@ -10,7 +10,7 @@ public static partial class mrgada
         {
             #region public vars
             
-                public List<S7Var<Nullable<bool>>> Unit = [];
+                public List<S7Var<Int64>> Unit = new(11);
 
         #endregion
 
@@ -24,8 +24,8 @@ public static partial class mrgada
                     #region init vars
                     int i = 0;
     
-                    for (i = 1; i <= 10; i++) {
-                        Unit[i] = new(this, s7CollectorClient, s7Plc);
+                    for (i = 0; i <= 10; i++) {
+                        Unit.Insert(i, new(this, s7CollectorClient, s7Plc));
                     }
         
             #endregion
@@ -37,6 +37,7 @@ public static partial class mrgada
                     int bitOffset = 0;
                     int i = 0;
             
+                    bitOffset = NearestDivisible((int)Math.Round(((float)bitOffset / 8.0f)), Math.Max(sizeof(Int64), 2)) * 8; // align bit offset because it is start of array
                     for (i = 1; i <= 10; i++) {
                         bitOffset = Unit[i].AlignAndIncrement(bitOffset);
                     }
